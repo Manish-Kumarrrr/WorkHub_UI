@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Router, { useRouter } from "next/router";
 import { useToast } from "@/components/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -36,6 +37,7 @@ const FormSchema = z.object({
 });
 
 function LoginForm() {
+  const router=useRouter;
   const user = userStore((state) => state.user);
   const setUser = userStore((state) => state.setUser);
   const { toast } = useToast();
@@ -121,7 +123,7 @@ function LoginForm() {
                           <div className="flex items-center">
                             <FormLabel>Password</FormLabel>
                             <Link
-                              href="#"
+                              href="/forgotPassword"
                               className="ml-auto inline-block text-sm underline"
                             >
                               Forgot your password?
@@ -152,7 +154,7 @@ function LoginForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <Link href="#" className="underline">
+              <Link href="/register" className="underline">
                 Register
               </Link>
             </div>
