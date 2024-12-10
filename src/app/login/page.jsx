@@ -26,7 +26,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { userStore } from "@/store/userStore";
-
+import { ForgotPasswordDialog } from "@/components/custom/ForgotPasswordDialog";
+import Footer from "@/components/custom/Footer";
 const FormSchema = z.object({
   email: z.string().min(2, {
     message: "Invalid Email.",
@@ -37,7 +38,7 @@ const FormSchema = z.object({
 });
 
 function LoginForm() {
-  const router=useRouter;
+  const router = useRouter;
   const user = userStore((state) => state.user);
   const setUser = userStore((state) => state.setUser);
   const { toast } = useToast();
@@ -68,14 +69,9 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col-reverse md:flex-row h-screen">
       {/* Left Section */}
-      <div className="bg-black w-full md:w-1/2  flex items-center justify-center">
-        <div className="text-white font-extrabold font-serif text-3xl md:text-5xl tracking-wide drop-shadow-lg">
-          WorkHub
-        </div>
-
-      </div>
+      <Footer/>
 
       {/* Right Section */}
       <div className=" w-full md:w-1/2 flex items-center justify-center">
@@ -120,15 +116,13 @@ function LoginForm() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex items-center">
+                          <div className="flex items-center justify-between">
                             <FormLabel>Password</FormLabel>
-                            <Link
-                              href="/forgotPassword"
-                              className="ml-auto inline-block text-sm underline"
-                            >
-                              Forgot your password?
-                            </Link>
+                            <div>
+                              <ForgotPasswordDialog />
+                            </div>
                           </div>
+
                           <FormControl>
                             <Input
                               id="password"

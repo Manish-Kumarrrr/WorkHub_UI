@@ -27,7 +27,7 @@ import { Label } from "@/components/ui/label";
 import { userStore } from "@/store/userStore";
 import { useState } from "react";
 import DropDown, { MultiSelect } from "@/components/custom/mulltiSelect";
-
+import Footer from "@/components/custom/Footer";
 
 
 
@@ -88,7 +88,8 @@ function RegisterForm() {
   ];
 
   return (
-    <div className="flex flex-col-reverse md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row ">
+      {/* <left part */}
       <div className="w-full md:w-1/2 flex items-center justify-center">
         <Card className="mx-auto my-20 max-w-sm">
           <CardHeader>
@@ -101,9 +102,9 @@ function RegisterForm() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full space-y-2"
+                className="w-full space-y-6"
               >
-                <div className="grid gap-1">
+                <div className="grid gap-3">
                   <FormField
                     control={form.control}
                     name="name"
@@ -123,7 +124,7 @@ function RegisterForm() {
                     )}
                   />
                 </div>
-                <div className="grid gap-1">
+                <div className="grid gap-3">
                   <FormField
                     control={form.control}
                     name="email"
@@ -143,7 +144,7 @@ function RegisterForm() {
                     )}
                   />
                 </div>
-                <div className="grid gap-1">
+                <div className="grid gap-3">
                   <FormField
                     control={form.control}
                     name="phoneNo"
@@ -163,7 +164,7 @@ function RegisterForm() {
                     )}
                   />
                 </div>
-                <div className="grid gap-1">
+                <div className="grid gap-3">
                   <FormField
                     control={form.control}
                     name="password"
@@ -183,7 +184,7 @@ function RegisterForm() {
                     )}
                   />
                 </div>
-                <div className="grid gap-1">
+                <div className="grid gap-3">
                   <FormField
                     control={form.control}
                     name="interest"
@@ -195,7 +196,7 @@ function RegisterForm() {
                             options={frameworksList}
                             onValueChange={field.onChange}
                             defaultValue={field.value}
-                            placeholder="Select frameworks"
+                            placeholder="Select Interests"
                           />
                         </FormControl>
                         <FormMessage />
@@ -203,7 +204,7 @@ function RegisterForm() {
                     )}
                   />
                 </div>
-                <Button className="w-full" type="submit">
+                <Button className="w-full mt-80" type="submit">
                   Next
                 </Button>
               </form>
@@ -211,12 +212,8 @@ function RegisterForm() {
           </CardContent>
         </Card>
       </div>
-     <div className="bg-black w-full md:w-1/2  flex items-center justify-center">
-        <div className="text-white font-extrabold font-serif text-3xl md:text-5xl tracking-wide drop-shadow-lg">
-          WorkHub
-        </div>
-
-      </div>
+      {/* right part */}
+      <Footer/>
     </div>
   );
 }
