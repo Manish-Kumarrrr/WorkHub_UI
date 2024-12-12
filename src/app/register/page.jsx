@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { userStore } from "@/store/userStore";
 import { useState } from "react";
-import DropDown, { MultiSelect } from "@/components/custom/mulltiSelect";
+import DropDown, { MultiSelect } from "@/components/custom/MulltiSelect";
 import Footer from "@/components/custom/Footer";
 
 
@@ -84,6 +84,9 @@ function RegisterForm() {
     { value: "teacher", label: "Teaching" },
     { value: "plumber", label: "Plumber" },
     { value: "carpenter", label: "Carpenter" },
+    { value: "helper", label: "Helper" },
+    { value: "helper", label: "Helper" },
+    { value: "helper", label: "Helper" },
     { value: "helper", label: "Helper" },
   ];
 

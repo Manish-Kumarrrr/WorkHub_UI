@@ -30,7 +30,7 @@ const Footer = () => {
           </svg>
         </a>
         <a
-          href="https://linkedin.com/in/your-profile"
+          href="https://www.linkedin.com/in/manish-kumarrrr/"
           className="text-gray-300 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"
