@@ -1,4 +1,5 @@
 "use client";
+
 import axios from "axios";
 import { useToast } from "@/components/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,8 +42,8 @@ const FormSchema = z.object({
       message: "Enter Email",
     })
     .email("This is not a valid email."),
-  password: z.string().min(2, {
-    message: "Password must be at least 2 characters.",
+  password: z.string().min(5, {
+    message: "Password must be at least 5 characters.",
   }),
   phoneNo: z
     .string()
@@ -54,6 +55,8 @@ const FormSchema = z.object({
 });
 
 function RegisterForm() {
+  const user = userStore((state) => state.user);
+  const setUser = userStore((state) => state.setUser);
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -67,16 +70,42 @@ function RegisterForm() {
   });
 
   async function onSubmit(data) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+    const decision = await aj.protect(data, {
+      // The email prop is required when a validateEmail rule is configured.
+      email: "test@0zc7eznv3rsiswlohu.tk",
     });
+  
+    if (decision.isDenied()) {
+      console.log("denieddddddddddddddddddddd")
+    }
+    // toast({
+    //   title: "You submitted the following values:",
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // });
     console.log(data);
-    // Make API call
+    const response = await axios.post(
+      "http://localhost:8085/v1/auth/register",
+      data
+    )
+    .then((response)=>{
+      setUser(response.data);
+      console.log(response);
+    }
+    ,(error)=>{
+      toast({
+        // title: "You submitted the following values:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">Email is already in use!!</code>
+          </pre>
+        ),
+      });
+    })
+
   }
 
   const frameworksList = [
@@ -84,9 +113,6 @@ function RegisterForm() {
     { value: "teacher", label: "Teaching" },
     { value: "plumber", label: "Plumber" },
     { value: "carpenter", label: "Carpenter" },
-    { value: "helper", label: "Helper" },
-    { value: "helper", label: "Helper" },
-    { value: "helper", label: "Helper" },
     { value: "helper", label: "Helper" },
   ];
 

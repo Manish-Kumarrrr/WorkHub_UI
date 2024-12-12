@@ -1,106 +1,73 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Search, Bell, Menu } from 'lucide-react'
+import { Search, Menu } from 'lucide-react'
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+// Simulating a user object with an avatar URL
+const user = {
+  avatarUrl: "https://github.com/shadcn.png",
+  name: "John Doe"
+}
 
 export default function Navbar() {
   return (
     <nav className="border-b bg-black">
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         <div className="flex items-center">
-          <Link href="/" className="">
+          <Link href="/" className="mr-6">
             <div className="text-white font-extrabold font-serif text-2xl md:text-3xl tracking-wide drop-shadow-lg">
-            WorkHub
+              WorkHub
             </div>
           </Link>
-          <div className="hidden md:flex">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <Link href="/" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Home
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link href="/about" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      About
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Products</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            href="/"
-                          >
-                            <div className="mb-2 mt-4 text-lg font-medium">
-                              Featured Product
-                            </div>
-                            <p className="text-sm leading-tight text-muted-foreground">
-                              Check out our latest and greatest offering
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <a href="/products/software" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Software</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Our cutting-edge software solutions
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <a href="/products/hardware" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                            <div className="text-sm font-medium leading-none">Hardware</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              Explore our range of hardware products
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="hidden md:block relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search" className="pl-8 w-[200px] lg:w-[300px]" />
+          <div className="hidden md:block relative text-white ">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 " />
+            <Input placeholder="Search" className="pl-8 w-[200px] lg:w-[300px] text-white" />
           </div>
-          <Button variant="ghost" size="icon" className="hidden md:flex">
-            <Bell className="h-5 w-5" />
+          <Button 
+            variant="default" 
+            size="sm" 
+            className=" border-white border-1"
+          >
+            Add Task
           </Button>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="No image" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="cursor-pointer hidden md:flex">
+                <AvatarImage src={user.avatarUrl} alt={`${user.name}'s avatar`} />
+                <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="rounded-none">
+              <DropdownMenuItem>
+                <Link href="/profile">Update Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/my-posts">My Posts</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/faq">FAQ</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <button onClick={() => console.log('Logout clicked')}>Logout</button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
@@ -109,13 +76,21 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col space-y-4">
-                <Link href="/" className="text-lg font-medium">Home</Link>
-                <Link href="/about" className="text-lg font-medium">About</Link>
-                <Link href="/products" className="text-lg font-medium">Products</Link>
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  className="w-full justify-start bg-primary text-primary-foreground hover:bg-primary/90"
+                >
+                  Add Task
+                </Button>
                 <div className="relative">
                   <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input placeholder="Search" className="pl-8" />
                 </div>
+                <Link href="/profile" className="text-sm">Update Profile</Link>
+                <Link href="/my-posts" className="text-sm">My Posts</Link>
+                <Link href="/faq" className="text-sm">FAQ</Link>
+                <button onClick={() => console.log('Logout clicked')} className="text-sm text-left">Logout</button>
               </nav>
             </SheetContent>
           </Sheet>

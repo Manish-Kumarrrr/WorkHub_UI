@@ -29,9 +29,12 @@ import { userStore } from "@/store/userStore";
 import { ForgotPasswordDialog } from "@/components/custom/ForgotPasswordDialog";
 import Footer from "@/components/custom/Footer";
 const FormSchema = z.object({
-  email: z.string().min(2, {
-    message: "Invalid Email.",
-  }),
+  email: z
+    .string()
+    .min(1, {
+      message: "Enter Email",
+    })
+    .email("This is not a valid email."),
   password: z.string().min(2, {
     message: "Password must be at least 2 characters.",
   }),
@@ -51,21 +54,25 @@ function LoginForm() {
   });
 
   async function onSubmit(data) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    
     console.log(data);
     const response = await axios.post(
       "http://localhost:8085/v1/auth/login",
       data
-    );
-    setUser(response.data);
-    console.log(response);
+    ).then((response) => {
+      console.log("success +++",response);
+      setUser(response.data);
+    }, (error) => {
+      console.log(error);
+      toast({
+        title: "Wrong Credentials!!",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">Wrong Credentials!!</code>
+          </pre>
+        ),
+      });
+    });
   }
 
   return (
