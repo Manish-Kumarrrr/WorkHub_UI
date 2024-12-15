@@ -29,29 +29,31 @@ import { userStore } from "@/store/userStore";
 import { useState } from "react";
 import DropDown, { MultiSelect } from "@/components/custom/MulltiSelect";
 import Footer from "@/components/custom/Footer";
+import { ProfilePictureUploadDialog } from "@/components/custom/ProfilePictureUploadDialog";
 
 
 
 const FormSchema = z.object({
-  name: z.string().min(1, {
-    message: "Enter Name",
-  }),
-  email: z
-    .string()
-    .min(1, {
-      message: "Enter Email",
-    })
-    .email("This is not a valid email."),
-  password: z.string().min(5, {
-    message: "Password must be at least 5 characters.",
-  }),
-  phoneNo: z
-    .string()
-    .min(10, { message: "Must be a valid mobile number" })
-    .max(14, { message: "Must be a valid mobile number" }),
-  interest: z
-    .array(z.string())
-    .nonempty({ message: "Please select at least one interest." }),
+  // name: z.string().min(1, {
+  //   message: "Enter Name",
+  // }),
+  // email: z
+  //   .string()
+  //   .min(1, {
+  //     message: "Enter Email",
+  //   })
+  //   .email("This is not a valid email."),
+  // password: z.string().min(5, {
+  //   message: "Password must be at least 5 characters.",
+  // }),
+  // phoneNo: z
+  //   .string()
+  //   .min(10, { message: "Must be a valid mobile number" })
+  //   .max(14, { message: "Must be a valid mobile number" }),
+  // interest: z
+  //   .array(z.string())
+  //   .nonempty({ message: "Please select at least one interest." }),
+  profilePhoto: z.string()
 });
 
 function RegisterForm() {
@@ -66,27 +68,35 @@ function RegisterForm() {
       password: "",
       phoneNo: "",
       interest: [], // Default value for the multi-select
+      profilePhoto:""
     },
   });
+  
 
   async function onSubmit(data) {
-    const decision = await aj.protect(data, {
-      // The email prop is required when a validateEmail rule is configured.
-      email: "test@0zc7eznv3rsiswlohu.tk",
-    });
-  
-    if (decision.isDenied()) {
-      console.log("denieddddddddddddddddddddd")
+    console.log(data,"------------------------------------")
+
+    const cloudinarySignature=await axios.get("http://localhost:8085/v1/auth/cloudinarySignature");
+    console.log(cloudinarySignature);
+    if(cloudinarySignature.status == 201){
+
+      const timestamp = Math.floor(Date.now() / 1000);
+      console.log("ManisH k")
+      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+      // Prepare form data
+      const formData = new FormData();
+      formData.append("file", data.profilePhoto);
+      formData.append("api_key", cloudinarySignature.data.api_key);
+      formData.append("timestamp", timestamp);
+      formData.append("signature", cloudinarySignature.data.signature);
+    
+      // Upload to Cloudinary
+      const response = await axios.post(cloudinaryUrl, formData);
+      console.log(response)
     }
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
-    console.log(data);
+
+    
     const response = await axios.post(
       "http://localhost:8085/v1/auth/register",
       data
@@ -233,6 +243,24 @@ function RegisterForm() {
                     )}
                   />
                 </div>
+                <div className="grid gap-3">
+                  <FormField
+                    control={form.control}
+                    name="profilePhoto"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Profile Photo</FormLabel>
+                        <FormControl>
+                        <ProfilePictureUploadDialog  
+                        onSave={field.onChange}
+                        onClick={()=>onClick}/>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                
                 <Button className="w-full mt-80" type="submit">
                   Next
                 </Button>
@@ -248,3 +276,5 @@ function RegisterForm() {
 }
 
 export default RegisterForm;
+
+
