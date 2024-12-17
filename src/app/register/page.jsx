@@ -104,6 +104,7 @@ function RegisterForm() {
     .then((response)=>{
       setUser(response.data);
       console.log(response);
+      setUser(response.data)
     }
     ,(error)=>{
       toast({

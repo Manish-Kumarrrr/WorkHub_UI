@@ -1,8 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# WorkHub
+
+WorkHub is a scalable and secure platform that connects task experts with gigs seamlessly. Whether you're looking to publish a task or find your next opportunity, WorkHub simplifies the process with intuitive features, including location-based job searches. Empowering experts to find work efficiently, WorkHub ensures tasks reach the right hands quickly and effectively.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Follow the steps below to set up and run WorkHub locally:
+
+### Step 1: Clone the Repository
+
+```bash
+git clone <repo-url>
+cd workhub
+```
+
+### Step 2: Set Environment Variables
+
+Create a `.env.local` file and add the following variables:
+
+```plaintext
+CLOUDINARY_CLOUD_NAME=<your_cloudinary_cloud_name>
+CLOUDINARY_API_KEY=<your_cloudinary_api_key>
+CLOUDINARY_API_SECRET=<your_cloudinary_api_secret>
+```
+
+### Step 3: Start the Application
+
+Run the following commands to start the development server:
 
 ```bash
 npm run dev
@@ -14,23 +39,41 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Step 4: Set Up Other Services
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Ensure the following services are set up and running:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **workhub_api_gateway**
+- **workhub_user_service**
+- **workhub_task_service**
 
-## Learn More
+### Step 5: Access the Application
 
-To learn more about Next.js, take a look at the following resources:
+Open your browser and navigate to:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[http://localhost:3000/login](http://localhost:3000/login)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+WorkHub uses the following technologies:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Backend**: Java, Spring Boot, Spring Feign Client, Spring Security, JWT
+- **Frontend**: React, Next.js, TailwindCSS, JavaScript
+- **Database**: MongoDB, Redis
+- **Message Broker**: 
+- **Cloud Services**: Cloudinary, Vercel
+
+---
+
+## Acknowledgments
+
+Thanks to the tools and technologies that made this project possible:
+- [Cloudinary](https://cloudinary.com/)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [Vercel](https://vercel.com/)
+
+---
+
+**Happy Coding!** 🚀

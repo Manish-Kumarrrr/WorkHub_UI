@@ -18,7 +18,7 @@ export async function POST(request) {
     const result = await cloudinary.uploader.upload(image, {
       upload_preset: 'ml_default',
       transformation: [
-        { width: 200, height: 200, crop: 'thumb', gravity: 'face' }, // Circular crop
+        { width: 300, height: 300, crop: 'thumb', gravity: 'face' }, // Circular crop
         { fetch_format: 'auto', quality: 'auto' }, // Optimize format and quality
       ],
     });

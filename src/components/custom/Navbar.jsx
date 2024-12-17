@@ -14,14 +14,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { userStore } from '@/store/userStore'
 
-// Simulating a user object with an avatar URL
-const user = {
-  avatarUrl: "https://github.com/shadcn.png",
-  name: "John Doe"
-}
+
 
 export default function Navbar() {
+  // Simulating a user object with an avatar URL
+// const user = {
+//   avatarUrl: "https://github.com/shadcn.png",
+//   name: "John Doe"
+// }
+const user = userStore((state) => state.user);
+
   return (
     <nav className="border-b bg-black">
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
@@ -48,7 +52,7 @@ export default function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="cursor-pointer hidden md:flex">
-                <AvatarImage src={user.avatarUrl} alt={`${user.name}'s avatar`} />
+                <AvatarImage src={user.profileUrl} alt={`${user.name}'s avatar`} />
                 <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
