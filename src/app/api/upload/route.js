@@ -17,6 +17,10 @@ export async function POST(request) {
   try {
     const result = await cloudinary.uploader.upload(image, {
       upload_preset: 'ml_default',
+      transformation: [
+        { width: 200, height: 200, crop: 'thumb', gravity: 'face' }, // Circular crop
+        { fetch_format: 'auto', quality: 'auto' }, // Optimize format and quality
+      ],
     });
 
     return NextResponse.json({ 
@@ -28,4 +32,3 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
   }
 }
-

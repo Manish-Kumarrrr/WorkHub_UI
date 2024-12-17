@@ -81,7 +81,7 @@ function RegisterForm() {
       // Upload to Cloudinary
       const uploadResponse = await axios.post(uploadUrl, {image:data.profileUrl})
       .then(response=>{
-        data.profileUrl=uploadResponse.data.url;
+        data.profileUrl=response.data.url;
       }
       ,(error)=>{
         data.profileUrl=""
