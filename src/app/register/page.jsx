@@ -33,27 +33,28 @@ import { ProfilePictureUploadDialog } from "@/components/custom/ProfilePictureUp
 
 
 
+
 const FormSchema = z.object({
-  // name: z.string().min(1, {
-  //   message: "Enter Name",
-  // }),
-  // email: z
-  //   .string()
-  //   .min(1, {
-  //     message: "Enter Email",
-  //   })
-  //   .email("This is not a valid email."),
-  // password: z.string().min(5, {
-  //   message: "Password must be at least 5 characters.",
-  // }),
-  // phoneNo: z
-  //   .string()
-  //   .min(10, { message: "Must be a valid mobile number" })
-  //   .max(14, { message: "Must be a valid mobile number" }),
-  // interest: z
-  //   .array(z.string())
-  //   .nonempty({ message: "Please select at least one interest." }),
-  profilePhoto: z.string()
+  name: z.string().min(1, {
+    message: "Enter Name",
+  }),
+  email: z
+    .string()
+    .min(1, {
+      message: "Enter Email",
+    })
+    .email("This is not a valid email."),
+  password: z.string().min(5, {
+    message: "Password must be at least 5 characters.",
+  }),
+  phoneNo: z
+    .string()
+    .min(10, { message: "Must be a valid mobile number" })
+    .max(14, { message: "Must be a valid mobile number" }),
+  interests: z
+    .array(z.string())
+    .nonempty({ message: "Please select at least one interests." }),
+  profileUrl: z.string()
 });
 
 function RegisterForm() {
@@ -67,34 +68,33 @@ function RegisterForm() {
       email: "",
       password: "",
       phoneNo: "",
-      interest: [], // Default value for the multi-select
-      profilePhoto:""
+      interests: [], // Default value for the multi-select
+      profileUrl:""
     },
   });
   
 
   async function onSubmit(data) {
-    console.log(data,"------------------------------------")
 
-    const cloudinarySignature=await axios.get("http://localhost:8085/v1/auth/cloudinarySignature");
-    console.log(cloudinarySignature);
-    if(cloudinarySignature.status == 201){
+      const uploadUrl = `http://localhost:3000/api/upload`;
 
-      const timestamp = Math.floor(Date.now() / 1000);
-      console.log("ManisH k")
-      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
-
-      // Prepare form data
-      const formData = new FormData();
-      formData.append("file", data.profilePhoto);
-      formData.append("api_key", cloudinarySignature.data.api_key);
-      formData.append("timestamp", timestamp);
-      formData.append("signature", cloudinarySignature.data.signature);
-    
       // Upload to Cloudinary
-      const response = await axios.post(cloudinaryUrl, formData);
-      console.log(response)
-    }
+      const uploadResponse = await axios.post(uploadUrl, {image:data.profileUrl})
+      .then(response=>{
+        data.profileUrl=uploadResponse.data.url;
+      }
+      ,(error)=>{
+        data.profileUrl=""
+        toast({
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">Monthly Credit Excided!!</code>
+            </pre>
+          ),
+        });
+      }
+      )
+
 
     
     const response = await axios.post(
@@ -226,16 +226,16 @@ function RegisterForm() {
                 <div className="grid gap-3">
                   <FormField
                     control={form.control}
-                    name="interest"
+                    name="interests"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Interests</FormLabel>
+                        <FormLabel>Interestss</FormLabel>
                         <FormControl>
                           <MultiSelect
                             options={frameworksList}
                             onValueChange={field.onChange}
                             defaultValue={field.value}
-                            placeholder="Select Interests"
+                            placeholder="Select Interestss"
                           />
                         </FormControl>
                         <FormMessage />
@@ -246,7 +246,7 @@ function RegisterForm() {
                 <div className="grid gap-3">
                   <FormField
                     control={form.control}
-                    name="profilePhoto"
+                    name="profileUrl"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Profile Photo</FormLabel>
