@@ -14,6 +14,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { UserCircle, ListTodo, PlusCircle, Search } from 'lucide-react'
+import { ProfileDialog } from "./ProfileDialog"
 
 export function AppSidebar() {
   return (
@@ -27,7 +28,7 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <UserCircle className="mr-2 h-4 w-4" />
-                Profile
+                <ProfileDialog />
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>

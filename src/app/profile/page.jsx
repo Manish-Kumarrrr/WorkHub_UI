@@ -1,6 +1,6 @@
 'use client'
 
-import { UserProfile } from '@/components/custom/UserProfile'
+import { UserProfile } from '@/components/custom/ProfileDialog'
 import { userStore } from "@/store/userStore";
 // This would typically come from a database or API
 const initialUser = {
