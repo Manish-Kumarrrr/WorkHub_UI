@@ -1,9 +1,12 @@
-"use client"
+"use client";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/custom/Navbar";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/custom/AppSidebar";
+import Footer from "@/components/custom/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,16 +26,23 @@ const geistMono = localFont({
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  const showNavbar = !['/register', '/login'].includes(pathname);
+  const showNavbar = !["/register", "/login"].includes(pathname);
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {showNavbar && <Navbar></Navbar>}
-
-        {children}
-        <Toaster />
+        <SidebarProvider>
+          <div className="flex w-screen">
+            <AppSidebar />
+            <SidebarInset className="flex flex-col">
+              <Navbar />
+              <main className="flex-1 overflow-auto p-4">{children}</main>
+              <Toaster />
+            </SidebarInset>
+          </div>
+        </SidebarProvider>
+        <Footer/>
       </body>
     </html>
   );
