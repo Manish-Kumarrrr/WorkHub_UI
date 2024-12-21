@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Sidebar,
   SidebarContent,
@@ -12,14 +13,19 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { UserCircle, ListTodo, PlusCircle, Search } from 'lucide-react'
-import { ProfileDialog } from "./ProfileDialog"
+} from "@/components/ui/sidebar";
+import { UserCircle, ListTodo, PlusCircle, Search } from "lucide-react";
+import { ProfileDialog } from "./ProfileDialog";
+import { set } from "date-fns";
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarHeader>
+    <Sidebar className="border-black">
+      <SidebarHeader className="bg-black">
+        {/* <SidebarTrigger className="p-4 mr-4 bg-white" onclick={()=>setToggle(true)}/> */}
+          <div className="bg-black h-8 m-0"></div>
+      </SidebarHeader>
+      <SidebarHeader className="mt-2">
         <Input type="text" placeholder="Search..." />
       </SidebarHeader>
       <SidebarContent>
@@ -62,7 +68,13 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarHeader>
+        <Button
+        // onClick={handleLogOut}
+        >
+          Sign Out
+        </Button>
+      </SidebarHeader>
     </Sidebar>
-  )
+  );
 }
-

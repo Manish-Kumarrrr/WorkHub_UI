@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-black  flex flex-col items-center justify-center px-4 text-center z-2">
+    <div className="bg-black  flex flex-col items-center justify-center text-center left-0 right-0 ">
       <div className="text-white font-extrabold font-serif text-3xl md:text-5xl tracking-wide drop-shadow-lg">
         WorkHub
       </div>
