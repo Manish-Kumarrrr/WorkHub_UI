@@ -12,16 +12,15 @@ export default function RootLayout({ children }) {
   const showNavbar = !["/register", "/login"].includes(pathname);
   
   return (
- 
         <SidebarProvider>
           <div className="flex w-screen">
             <AppSidebar />
             <SidebarInset className="flex flex-col">
               <Navbar />
+              <main className="flex-1 overflow-auto ">{children}</main>
               <Footer/>
             </SidebarInset>
           </div>
         </SidebarProvider>
-  
   );
 }

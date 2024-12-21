@@ -31,6 +31,8 @@ import DropDown, { MultiSelect } from "@/components/custom/MulltiSelect";
 import Footer from "@/components/custom/Footer";
 import { ProfilePictureUploadDialog } from "@/components/custom/ProfilePictureUploadDialog";
 
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 
 
 
@@ -69,33 +71,35 @@ function RegisterForm() {
       password: "",
       phoneNo: "",
       interests: [], // Default value for the multi-select
-      profileUrl:""
+      profileUrl:""  // initially it stores base64 Image after upload it will store image url
     },
   });
   
 
   async function onSubmit(data) {
 
-      const uploadUrl = `http://localhost:3000/api/upload`;
-
-      // Upload to Cloudinary
-      const uploadResponse = await axios.post(uploadUrl, {image:data.profileUrl})
-      .then(response=>{
-        data.profileUrl=response.data.url;
-      }
-      ,(error)=>{
-        data.profileUrl=""
-        toast({
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">Monthly Credit Excided!!</code>
-            </pre>
-          ),
-        });
-      }
-      )
-
-
+  
+      // Step 1: Request signature and timestamp from the API route
+      const SignedResponse = await axios.post('/api/upload');
+      const { signature, timestamp } = SignedResponse.data;
+  
+      // Step 2: Prepare the form data for Cloudinary
+      const formData = new FormData();
+      formData.append('file', data.profileUrl);
+      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append('timestamp', timestamp);
+      formData.append('signature', signature);
+  
+      // Step 3: Upload the image to Cloudinary
+      const cloudinaryResponse = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+      // Step 4: Return the secure URL of the uploaded image
+      data.profileUrl=cloudinaryResponse.data.secure_url;
     
     const response = await axios.post(
       "http://localhost:8085/v1/auth/register",
