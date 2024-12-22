@@ -17,6 +17,7 @@ import {
 import { UserCircle, ListTodo, PlusCircle, Search } from "lucide-react";
 import { ProfileDialog } from "./ProfileDialog";
 import { set } from "date-fns";
+import { AddTask } from "./AddTask";
 
 export function AppSidebar() {
   return (
@@ -33,6 +34,7 @@ export function AppSidebar() {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton>
+                {/* View Profile */}
                 <UserCircle className="mr-2 h-4 w-4" />
                 <ProfileDialog />
               </SidebarMenuButton>
@@ -46,7 +48,8 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton>
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Add task
+                {/* Add task */}
+                <AddTask/>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

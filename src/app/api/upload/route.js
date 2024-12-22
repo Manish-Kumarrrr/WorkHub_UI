@@ -10,7 +10,7 @@ cloudinary.config({
 export async function POST() {
   
   try {
-      const timestamp = Math.floor(Date.now() / 1000); // Use seconds
+      const timestamp = Math.floor(Date.now() / 1000)-55*60; // Use seconds // valid only for 5 min
       const signature = cloudinary.utils.api_sign_request(
         { timestamp },
         process.env.CLOUDINARY_API_SECRET

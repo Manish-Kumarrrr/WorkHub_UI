@@ -23,7 +23,7 @@ export function ProfileDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <span className="text-primary hover:underline cursor-pointer">View Profile</span>
+        <span className="text-primary hover:underline cursor-pointer w-full h-full">View Profile</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

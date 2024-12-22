@@ -97,9 +97,10 @@ function RegisterForm() {
         {
           headers: { 'Content-Type': 'multipart/form-data' },
         }
-      );
+      )
       // Step 4: Return the secure URL of the uploaded image
       data.profileUrl=cloudinaryResponse.data.secure_url;
+      console.log(data)
     
     const response = await axios.post(
       "http://localhost:8085/v1/auth/register",
@@ -120,6 +121,7 @@ function RegisterForm() {
         ),
       });
     })
+    console.log(response,"@@@@@@@@@@@@@")
 
   }
 
