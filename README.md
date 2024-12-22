@@ -62,8 +62,8 @@ WorkHub uses the following technologies:
 - **Backend**: Java, Spring Boot, Spring Feign Client, Spring Security, JWT
 - **Frontend**: React, Next.js, TailwindCSS, JavaScript
 - **Database**: MongoDB, Redis
-- **Message Broker**: 
-- **Cloud Services**: Cloudinary, Vercel
+- **Message Broker**:Kafka 
+- **Cloud Services**: Cloudinary, Vercel, Confluent
 
 ---
 
