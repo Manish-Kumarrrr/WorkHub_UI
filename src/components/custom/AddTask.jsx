@@ -32,7 +32,9 @@ import {
 } from "@/components/ui/select";
 import { X } from "lucide-react";
 import { tag } from "@/store/tag";
-
+import axios from "axios";
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 const formSchema = z.object({
   tag: z.string({
     required_error: "Please select tag.",
@@ -56,6 +58,7 @@ const formSchema = z.object({
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
   pincode: z.string().min(6, "Pincode must be 6 digits"),
+  images: z.array()
 });
 
 export function AddTask() {
@@ -78,18 +81,70 @@ export function AddTask() {
     },
   });
 
-  function onSubmit(values) {
+  async function onSubmit(values) {
     console.log(values);
     console.log(images);
     console.log(previews);
-    // Here you would typically send the form data to your backend
+    const imageList=[]
+    // Step 1: Request signature and timestamp from the API route
+    const SignedResponse = await axios.post("/api/upload");
+    const { signature, timestamp } = SignedResponse.data;
+    console.log(signature,"-----------------")
+    for (const image in images){
+    
+      // Step 2: Prepare the form data for Cloudinary
+      const formData = new FormData();
+      formData.append("file", images[image]);
+      formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append("timestamp", timestamp);
+      formData.append("signature", signature);
+  
+      // Step 3: Upload the image to Cloudinary
+      const cloudinaryResponse = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      console.log(cloudinaryResponse)
+      // Step 4: Return the secure URL of the uploaded image
+      // imageList = [...imageList,cloudinaryResponse.data.secure_url];
+      imageList.push(cloudinaryResponse.data.secure_url)
+      console.log(imageList,"@@@@@@@@@@@@@@",image);
+    }
+    values.images=imageList;
+    // Now send all the task data to server or db
+
+    const response = await axios
+      .post("http://localhost:8085/v1/api/task/add", values)
+      .then(
+        (response) => {
+        },
+        (error) => {
+          toast({
+            // title: "You submitted the following values:",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">Email is already in use!!</code>
+              </pre>
+            ),
+          });
+        }
+      );
+    console.log(response, "@@@@@@@@@@@@@ register response");
+
+
     setOpen(false);
   }
 
   const handleImageUpload = (e) => {
+    console.log(e)
     if (e.target.files) {
+      console.log(e.target.files);
       const filesArray = Array.from(e.target.files);
       setImages(filesArray);
+      console.log(filesArray)
 
       const previewUrls = filesArray.map((file) => URL.createObjectURL(file));
       setPreviews(previewUrls);
@@ -223,7 +278,7 @@ export function AddTask() {
                     <img
                       src={preview}
                       alt={`Preview ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-md"
+                      className="w-full h-96 object-cover rounded-md"
                     />
                     <button
                       type="button"
