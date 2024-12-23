@@ -40,7 +40,6 @@ const formSchema = z.object({
     required_error: "Please select tag.",
   }),
   pay: z.string().min(1, { message: "Pay is required" }),
-  // .min(2, { message: "Pay should be greater than 99" })
   email: z
     .string()
     .min(1, {
@@ -88,7 +87,6 @@ export function AddTask() {
     // Step 1: Request signature and timestamp from the API route
     const SignedResponse = await axios.post("/api/upload");
     const { signature, timestamp } = SignedResponse.data;
-    console.log(signature, "-----------------");
     for (const image in images) {
       // Step 2: Prepare the form data for Cloudinary
       const formData = new FormData();
@@ -107,17 +105,17 @@ export function AddTask() {
       );
       console.log(cloudinaryResponse);
       // Step 4: Return the secure URL of the uploaded image
-      // imageList = [...imageList,cloudinaryResponse.data.secure_url];
       imageList.push(cloudinaryResponse.data.secure_url);
-      console.log(imageList, "@@@@@@@@@@@@@@", image);
     }
     values.images = imageList;
     // Now send all the task data to server or db
 
-    const response = await axios
+    await axios
       .post("http://localhost:8085/v1/task/add", values)
       .then(
-        (response) => {},
+        (response) => {
+          
+        },
         (error) => {
           toast({
             // title: "You submitted the following values:",
@@ -129,7 +127,6 @@ export function AddTask() {
           });
         }
       );
-    console.log(response, "@@@@@@@@@@@@@ register response");
 
     setOpen(false);
   }
