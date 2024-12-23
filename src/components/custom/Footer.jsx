@@ -2,13 +2,13 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-black  flex flex-col items-center justify-center text-center left-0 right-0 ">
-      <div className="text-white font-extrabold font-serif text-3xl md:text-5xl tracking-wide drop-shadow-lg">
+    <div className="bg-black  flex flex-col items-center justify-center text-center  ">
+      <div className="text-white mw-4 font-extrabold font-serif text-3xl md:text-5xl tracking-wide drop-shadow-lg">
         WorkHub
       </div>
-      <div className="text-white mt-4 text-sm">
+      <div className="text-white mr-10 ml-10 text-sm">
         Welcome to WorkHub – the premier destination for connecting gig workers and employers. 
-        Together, we’re empowering the future of work, one gig at a time.
+        Together, we’re empowering the future of work.
       </div>
       <div className="mt-6 text-gray-400 text-xs md:text-sm">
         &copy; 2024 All rights reserved by <span className="text-white">Manish Kumar</span>.

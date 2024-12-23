@@ -30,7 +30,8 @@ import { useState } from "react";
 import DropDown, { MultiSelect } from "@/components/custom/MulltiSelect";
 import Footer from "@/components/custom/Footer";
 import { ProfilePictureUploadDialog } from "@/components/custom/ProfilePictureUploadDialog";
-
+import { tag } from "@/store/tag";
+import { useRouter } from 'next/navigation';
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 
@@ -60,6 +61,7 @@ const FormSchema = z.object({
 });
 
 function RegisterForm() {
+  const router = useRouter()
   const user = userStore((state) => state.user);
   const setUser = userStore((state) => state.setUser);
   const { toast } = useToast();
@@ -77,8 +79,9 @@ function RegisterForm() {
   
 
   async function onSubmit(data) {
-
-  
+      console.log("register page:",data)
+      router.replace("/feed")
+      return 
       // Step 1: Request signature and timestamp from the API route
       const SignedResponse = await axios.post('/api/upload');
       const { signature, timestamp } = SignedResponse.data;
@@ -110,6 +113,7 @@ function RegisterForm() {
       setUser(response.data);
       console.log(response);
       setUser(response.data)
+      Router.replace("/feed")
     }
     ,(error)=>{
       toast({
@@ -124,14 +128,6 @@ function RegisterForm() {
     console.log(response,"@@@@@@@@@@@@@")
 
   }
-
-  const frameworksList = [
-    { value: "software", label: "Software Development" },
-    { value: "teacher", label: "Teaching" },
-    { value: "plumber", label: "Plumber" },
-    { value: "carpenter", label: "Carpenter" },
-    { value: "helper", label: "Helper" },
-  ];
 
   return (
     <div className="flex flex-col md:flex-row ">
@@ -201,7 +197,7 @@ function RegisterForm() {
                           <Input
                             id="phoneNo"
                             type="number"
-                            placeholder="Enter Your Phone Number"
+                            placeholder="Enter with Country Code/ +91 8210724381"
                             {...field}
                           />
                         </FormControl>
@@ -239,10 +235,11 @@ function RegisterForm() {
                         <FormLabel>Interestss</FormLabel>
                         <FormControl>
                           <MultiSelect
-                            options={frameworksList}
+                            options={tag}
                             onValueChange={field.onChange}
                             defaultValue={field.value}
-                            placeholder="Select Interestss"
+                            placeholder="Select Interests"
+                            // maxCount={5}
                           />
                         </FormControl>
                         <FormMessage />
@@ -269,7 +266,7 @@ function RegisterForm() {
                 </div>
                 
                 <Button className="w-full mt-80" type="submit">
-                  Next
+                  Register
                 </Button>
               </form>
             </Form>

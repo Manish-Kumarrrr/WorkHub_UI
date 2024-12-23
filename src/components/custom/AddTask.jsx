@@ -31,16 +31,29 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { X } from 'lucide-react'
+import { tag } from '@/store/tag'
 
 const formSchema = z.object({
   tag: z.string({
-    required_error: "Please select a tag.",
+    required_error: "Please select tag.",
   }),
-  charge: z.string().min(1, "Charge is required"),
-  email: z.string().email("Invalid email address"),
-  phoneNo: z.string().min(10, "Phone number must be at least 10 digits"),
+  pay: z
+    .string()
+    .min(1, { message: "Pay is required" })
+    // .min(2, { message: "Pay should be greater than 99" })
+    ,
+  email: z
+      .string()
+      .min(1, {
+        message: "Enter Email",
+      })
+      .email("This is not a valid email."),
+  phoneNo: z
+    .string()
+    .min(10, { message: "Must be a valid mobile number" })
+    .max(14, { message: "Must be a valid mobile number" }),
   description: z.string().min(10, "Description must be at least 10 characters long"),
-  address: z.string().min(1, "Address is required"),
+  address: z.string().min(6, "Address length should be more than 6 letters"),
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
   pincode: z.string().min(6, "Pincode must be 6 digits"),
@@ -55,7 +68,7 @@ export function AddTask() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       tag: "",
-      charge: "",
+      pay: "",
       email: "",
       phoneNo: "",
       description: "",
@@ -69,6 +82,7 @@ export function AddTask() {
   function onSubmit(values) {
     console.log(values)
     console.log(images)
+    console.log(previews)
     // Here you would typically send the form data to your backend
     setOpen(false)
   }
@@ -120,9 +134,9 @@ export function AddTask() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="urgent">Urgent</SelectItem>
-                        <SelectItem value="normal">Normal</SelectItem>
-                        <SelectItem value="low">Low Priority</SelectItem>
+                        {tag.map((ta,index)=>{
+                            return <SelectItem key={index} value={ta.value}>{ta.label}</SelectItem>
+                        })}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -131,10 +145,10 @@ export function AddTask() {
               />
               <FormField
                 control={form.control}
-                name="charge"
+                name="pay"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Charge (Stipend)</FormLabel>
+                    <FormLabel>Pay (₹/INR)</FormLabel>
                     <FormControl>
                       <Input type="number" {...field} />
                     </FormControl>
@@ -164,7 +178,7 @@ export function AddTask() {
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input type="number" {...field} placeholder="Enter with Country Code/ +91 8210724381" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
