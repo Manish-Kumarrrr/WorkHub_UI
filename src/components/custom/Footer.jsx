@@ -7,11 +7,12 @@ const Footer = () => {
         WorkHub
       </div>
       <div className="text-white mr-10 ml-10 text-sm">
-        Welcome to WorkHub – the premier destination for connecting gig workers and employers. 
-        Together, we’re empowering the future of work.
+        Welcome to WorkHub – the premier destination for connecting gig workers
+        and employers. Together, we’re empowering the future of work.
       </div>
       <div className="mt-6 text-gray-400 text-xs md:text-sm">
-        &copy; 2024 All rights reserved by <span className="text-white">Manish Kumar</span>.
+        &copy; 2024 All rights reserved by{" "}
+        <span className="text-white">Manish Kumar</span>.
       </div>
       <div className="mt-2 flex items-center space-x-4">
         <a

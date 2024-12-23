@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -20,49 +20,48 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { X } from 'lucide-react'
-import { tag } from '@/store/tag'
+} from "@/components/ui/select";
+import { X } from "lucide-react";
+import { tag } from "@/store/tag";
 
 const formSchema = z.object({
   tag: z.string({
     required_error: "Please select tag.",
   }),
-  pay: z
-    .string()
-    .min(1, { message: "Pay is required" })
-    // .min(2, { message: "Pay should be greater than 99" })
-    ,
+  pay: z.string().min(1, { message: "Pay is required" }),
+  // .min(2, { message: "Pay should be greater than 99" })
   email: z
-      .string()
-      .min(1, {
-        message: "Enter Email",
-      })
-      .email("This is not a valid email."),
+    .string()
+    .min(1, {
+      message: "Enter Email",
+    })
+    .email("This is not a valid email."),
   phoneNo: z
     .string()
     .min(10, { message: "Must be a valid mobile number" })
     .max(14, { message: "Must be a valid mobile number" }),
-  description: z.string().min(10, "Description must be at least 10 characters long"),
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters long"),
   address: z.string().min(6, "Address length should be more than 6 letters"),
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
   pincode: z.string().min(6, "Pincode must be 6 digits"),
-})
+});
 
 export function AddTask() {
-  const [open, setOpen] = useState(false)
-  const [images, setImages] = useState([])
-  const [previews, setPreviews] = useState([])
+  const [open, setOpen] = useState(false);
+  const [images, setImages] = useState([]);
+  const [previews, setPreviews] = useState([]);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -77,42 +76,44 @@ export function AddTask() {
       state: "",
       pincode: "",
     },
-  })
+  });
 
   function onSubmit(values) {
-    console.log(values)
-    console.log(images)
-    console.log(previews)
+    console.log(values);
+    console.log(images);
+    console.log(previews);
     // Here you would typically send the form data to your backend
-    setOpen(false)
+    setOpen(false);
   }
 
   const handleImageUpload = (e) => {
     if (e.target.files) {
-      const filesArray = Array.from(e.target.files)
-      setImages(filesArray)
+      const filesArray = Array.from(e.target.files);
+      setImages(filesArray);
 
-      const previewUrls = filesArray.map(file => URL.createObjectURL(file))
-      setPreviews(previewUrls)
+      const previewUrls = filesArray.map((file) => URL.createObjectURL(file));
+      setPreviews(previewUrls);
     }
-  }
+  };
 
   const removeImage = (index) => {
-    const newImages = [...images]
-    newImages.splice(index, 1)
-    setImages(newImages)
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    setImages(newImages);
 
-    const newPreviews = [...previews]
-    URL.revokeObjectURL(newPreviews[index])
-    newPreviews.splice(index, 1)
-    setPreviews(newPreviews)
-  }
+    const newPreviews = [...previews];
+    URL.revokeObjectURL(newPreviews[index]);
+    newPreviews.splice(index, 1);
+    setPreviews(newPreviews);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {/* <Button variant="outline">Open Task Form</Button> */}
-        <span className="text-primary hover:underline cursor-pointer w-full h-full">Add Task</span>
+        <span className="text-primary hover:underline cursor-pointer w-full h-full">
+          Add Task
+        </span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[700px] lg:max-w-[900px] w-[90vw] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
@@ -127,15 +128,22 @@ export function AddTask() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Tag</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a tag" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {tag.map((ta,index)=>{
-                            return <SelectItem key={index} value={ta.value}>{ta.label}</SelectItem>
+                        {tag.map((ta, index) => {
+                          return (
+                            <SelectItem key={index} value={ta.value}>
+                              {ta.label}
+                            </SelectItem>
+                          );
                         })}
                       </SelectContent>
                     </Select>
@@ -178,7 +186,11 @@ export function AddTask() {
                   <FormItem>
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} placeholder="Enter with Country Code/ +91 8210724381" />
+                      <Input
+                        type="number"
+                        {...field}
+                        placeholder="Enter with Country Code/ +91 8210724381"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -198,7 +210,9 @@ export function AddTask() {
                       accept="image/*"
                     />
                   </FormControl>
-                  <FormDescription>Upload multiple images for the task</FormDescription>
+                  <FormDescription>
+                    Upload multiple images for the task
+                  </FormDescription>
                 </FormItem>
               )}
             />
@@ -206,7 +220,11 @@ export function AddTask() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {previews.map((preview, index) => (
                   <div key={index} className="relative">
-                    <img src={preview} alt={`Preview ${index + 1}`} className="w-full h-32 object-cover rounded-md" />
+                    <img
+                      src={preview}
+                      alt={`Preview ${index + 1}`}
+                      className="w-full h-32 object-cover rounded-md"
+                    />
                     <button
                       type="button"
                       onClick={() => removeImage(index)}
@@ -288,11 +306,12 @@ export function AddTask() {
                 )}
               />
             </div>
-            <Button type="submit" className="w-full">Submit</Button>
+            <Button type="submit" className="w-full">
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-
