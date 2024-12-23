@@ -58,7 +58,6 @@ const formSchema = z.object({
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
   pincode: z.string().min(6, "Pincode must be 6 digits"),
-  images: z.array()
 });
 
 export function AddTask() {
@@ -85,20 +84,19 @@ export function AddTask() {
     console.log(values);
     console.log(images);
     console.log(previews);
-    const imageList=[]
+    const imageList = [];
     // Step 1: Request signature and timestamp from the API route
     const SignedResponse = await axios.post("/api/upload");
     const { signature, timestamp } = SignedResponse.data;
-    console.log(signature,"-----------------")
-    for (const image in images){
-    
+    console.log(signature, "-----------------");
+    for (const image in images) {
       // Step 2: Prepare the form data for Cloudinary
       const formData = new FormData();
       formData.append("file", images[image]);
       formData.append("api_key", process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
       formData.append("timestamp", timestamp);
       formData.append("signature", signature);
-  
+
       // Step 3: Upload the image to Cloudinary
       const cloudinaryResponse = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
@@ -107,20 +105,19 @@ export function AddTask() {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log(cloudinaryResponse)
+      console.log(cloudinaryResponse);
       // Step 4: Return the secure URL of the uploaded image
       // imageList = [...imageList,cloudinaryResponse.data.secure_url];
-      imageList.push(cloudinaryResponse.data.secure_url)
-      console.log(imageList,"@@@@@@@@@@@@@@",image);
+      imageList.push(cloudinaryResponse.data.secure_url);
+      console.log(imageList, "@@@@@@@@@@@@@@", image);
     }
-    values.images=imageList;
+    values.images = imageList;
     // Now send all the task data to server or db
 
     const response = await axios
-      .post("http://localhost:8085/v1/api/task/add", values)
+      .post("http://localhost:8085/v1/task/add", values)
       .then(
-        (response) => {
-        },
+        (response) => {},
         (error) => {
           toast({
             // title: "You submitted the following values:",
@@ -134,17 +131,16 @@ export function AddTask() {
       );
     console.log(response, "@@@@@@@@@@@@@ register response");
 
-
     setOpen(false);
   }
 
   const handleImageUpload = (e) => {
-    console.log(e)
+    console.log(e);
     if (e.target.files) {
       console.log(e.target.files);
       const filesArray = Array.from(e.target.files);
       setImages(filesArray);
-      console.log(filesArray)
+      console.log(filesArray);
 
       const previewUrls = filesArray.map((file) => URL.createObjectURL(file));
       setPreviews(previewUrls);
