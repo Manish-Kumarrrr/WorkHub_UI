@@ -87,7 +87,11 @@ export default function Feed() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Task List</h1>
-
+      {tasks.length > 0 ? (
+        <TaskList tasks={tasks} lastTaskRef={lastTaskRef} />
+      ) : (
+        <Loading/>
+      )}
       <TaskList tasks={tasks} lastTaskRef={lastTaskRef} />
       {isFetchingNextPage && (
         <div className="text-center mt-4">
