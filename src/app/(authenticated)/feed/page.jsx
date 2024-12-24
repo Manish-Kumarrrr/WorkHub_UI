@@ -1,56 +1,99 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { TaskList } from '@/components/custom/TaskList';
+import { useEffect, useRef, useCallback } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { TaskList } from "@/components/custom/TaskList";
+import Loading from "@/components/custom/Loading";
 
-// interface Task {
-//   taskId: string;
-//   tag: string;
-//   pay: string;
-//   email: string;
-//   phoneNo: string;
-//   Date: string;
-//   image: string[];
-//   status: string;
-//   description: string;
-//   address: string;
-//   city: string;
-//   state: string;
-//   pincode: string;
+// interface TaskResponse {
+//   content: Task[];
+//   pageNumber: number;
+//   pageSize: number;
+//   totalElements: number;
+//   totalPages: number;
+//   lastPage: boolean;
 // }
 
+const ITEMS_PER_PAGE = 8;
+
+const fetchTasks = async ({ pageParam = 0 }) => {
+  const response = await axios.get(
+    `http://localhost:8085/v1/task/all/21bcs133@iiitdmj.ac.in`,
+    {
+      params: {
+        pageNumber: pageParam,
+        sortDir: "desc",
+        pageSize: ITEMS_PER_PAGE,
+        sortBy: "createdDate",
+      },
+    }
+  );
+  return response.data;
+};
+
 export default function Feed() {
-  const [tasks, setTasks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ["tasks"],
+    queryFn: fetchTasks,
+    getNextPageParam: (lastPage) => {
+      return lastPage.lastPage ? undefined : lastPage.pageNumber + 1;
+    },
+  });
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await axios.get('http://localhost:8085/v1/task/all');
-        console.log(response)
-        setTasks(response.data);
-        setIsLoading(false);
-      } catch (err) {
-        setError('Failed to fetch tasks');
-        setIsLoading(false);
-      }
-    };
+  const intObserver = useRef(null);
+  const lastTaskRef = useCallback(
+    (task) => {
+      if (isFetchingNextPage) return;
 
-    fetchTasks();
-  }, []);
+      if (intObserver.current) intObserver.current.disconnect();
 
-  if (isLoading) {
-    return <div className="flex justify-center items-center min-h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-    </div>;
+      intObserver.current = new IntersectionObserver((tasks) => {
+        if (tasks[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+
+      if (task) intObserver.current.observe(task);
+    },
+    [isFetchingNextPage, fetchNextPage, hasNextPage]
+  );
+
+  if (status === "loading") {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   }
 
-  if (error) {
-    return <div className="text-center text-red-500 text-xl mt-8">Error: {error}</div>;
+  if (status === "error") {
+    return (
+      <div className="text-center text-red-500 text-xl mt-8">
+        Error: {error.message}
+      </div>
+    );
   }
 
-  return <TaskList tasks={tasks} />;
+  const tasks = data?.pages.flatMap((page) => page.content) || [];
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Task List</h1>
+
+      <TaskList tasks={tasks} lastTaskRef={lastTaskRef} />
+      {isFetchingNextPage && (
+        <div className="text-center mt-4">
+          <div className="inline-block animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+      )}
+    </div>
+  );
 }
-

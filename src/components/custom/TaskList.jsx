@@ -8,29 +8,41 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { format, parseISO } from "date-fns"
 
-// type Task = {
+// export type Task = {
 //   taskId: string
+//   userId: string
 //   tag: string
-//   pay: string
-//   email: string
+//   pay: string | null
+//   email: string | null
 //   phoneNo: string
-//   Date: string
-//   image: string[]
+//   createdDate: string | null
+//   images: string[] | null
 //   status: string
 //   description: string
-//   address: string
-//   city: string
-//   state: string
-//   pincode: string
+//   lattitude: string | null
+//   longitude: string | null
+//   address: string | null
+//   city: string | null
+//   state: string | null
+//   pincode: string | null
 // }
 
 // type TaskListProps = {
 //   tasks: Task[]
+//   lastTaskRef?: (node?: Element | null) => void
 // }
 
 function ImageCarousel({ images }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
+
+  if (!images || images.length === 0) {
+    return (
+      <div className="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
+        No Image
+      </div>
+    )
+  }
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
@@ -40,24 +52,16 @@ function ImageCarousel({ images }) {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
   }
 
-  if (images?.length === 0) {
-    return (
-      <div className="w-full h-64 bg-gray-200 flex items-center justify-center rounded-lg">
-        No Image
-      </div>
-    )
-  }
-
   return (
     <>
       <div className="relative">
         <img
-          src={images?.[currentImageIndex]}
+          src={images[currentImageIndex]}
           alt={`Task image ${currentImageIndex + 1}`}
           className="w-full h-64 object-cover rounded-lg cursor-pointer"
           onClick={() => setIsZoomed(true)}
         />
-        {images?.length > 1 && (
+        {images.length > 1 && (
           <>
             <Button
               variant="outline"
@@ -91,14 +95,22 @@ function ImageCarousel({ images }) {
       </div>
       <Dialog open={isZoomed} onOpenChange={setIsZoomed}>
         <DialogContent className="max-w-[90vw] max-h-[90vh] p-0">
-        <div className="relative w-full h-full center overflow-hidden">
+          <div className="relative w-full h-full">
             <img
-                src={images?.[currentImageIndex]}
-                alt={`Zoomed task image ${currentImageIndex + 1}`}
-                className="object-contain w-full h-full"
+              src={images[currentImageIndex]}
+              alt={`Zoomed task image ${currentImageIndex + 1}`}
+              className="w-full h-full object-contain"
             />
-
-            {images?.length > 1 && (
+            <Button
+              variant="outline"
+              size="icon"
+              className="absolute top-2 right-2"
+              onClick={() => setIsZoomed(false)}
+              aria-label="Close zoomed view"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            {images.length > 1 && (
               <>
                 <Button
                   variant="outline"
@@ -130,40 +142,46 @@ function ImageCarousel({ images }) {
   )
 }
 
-export function TaskList({ tasks }) {
+export function TaskList({ tasks, lastTaskRef }) {
   return (
-    <div className="space-y-4 mt-20 mb-20 mr-10 ml-10">
-      {tasks.map((task) => (
-        <Card key={task.taskId} className="overflow-hidden">
+    <div className="space-y-4">
+      {tasks.map((task, index) => (
+        <Card 
+          key={`${task.taskId}-${index}`} 
+          className="overflow-hidden"
+          ref={index === tasks.length - 1 ? lastTaskRef : undefined}
+        >
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row md:items-start md:space-x-6">
               <div className="flex-shrink-0 w-full md:w-1/3 mb-4 md:mb-0">
-                <ImageCarousel images={task.images}  />
+                <ImageCarousel images={task.images} />
               </div>
               <div className="flex-grow">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-lg font-semibold">{task.taskId}</h3>
-                  <Badge variant={task.status === 'completed' ? 'default' : 'secondary'}>
+                  <Badge variant={task.status.toLowerCase() === 'active' ? 'default' : 'secondary'}>
                     {task.status}
                   </Badge>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
                   <div><span className="font-semibold">Tag:</span> {task.tag}</div>
-                  <div><span className="font-semibold">Pay:</span> {task.pay}</div>
+                  <div><span className="font-semibold">Pay:</span> {task.pay || 'N/A'}</div>
                   <div><span className="font-semibold">Date:</span> {task.createdDate ? format(parseISO(task.createdDate), 'dd/MM/yyyy') : 'N/A'}</div>
-                  <div><span className="font-semibold">Email:</span> {task.email}</div>
+                  <div><span className="font-semibold">Email:</span> {task.email || 'N/A'}</div>
                   <div><span className="font-semibold">Phone:</span> {task.phoneNo}</div>
                 </div>
                 <div className="mb-2">
                   <span className="font-semibold">Description:</span>
                   <p className="mt-1 text-sm">{task.description}</p>
                 </div>
-                <div>
-                  <span className="font-semibold">Address:</span>
-                  <p className="mt-1 text-sm">
-                    {task.address}, {task.city}, {task.state}, {task.pincode}
-                  </p>
-                </div>
+                {(task.address || task.city || task.state || task.pincode) && (
+                  <div>
+                    <span className="font-semibold">Address:</span>
+                    <p className="mt-1 text-sm">
+                      {[task.address, task.city, task.state, task.pincode].filter(Boolean).join(', ')}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </CardContent>
