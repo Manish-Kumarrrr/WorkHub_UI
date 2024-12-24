@@ -36,14 +36,16 @@ export function AppSidebar() {
               <SidebarMenuButton>
                 {/* View Profile */}
                 <UserCircle className="mr-2 h-4 w-4" />
-                <ProfileDialog />
+                <ProfileDialog/>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
+            <a href="/mytask" >
               <SidebarMenuButton>
                 <ListTodo className="mr-2 h-4 w-4" />
-                Your tasks
+                My Tasks 
               </SidebarMenuButton>
+            </a>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton>

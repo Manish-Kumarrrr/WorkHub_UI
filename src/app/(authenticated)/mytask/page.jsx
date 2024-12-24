@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 const ITEMS_PER_PAGE = 8;
 
 export default function Feed() {
-    const user = userStore((state) => state.user);
+  const user = userStore((state) => state.user);
 
   const router = useRouter();
   
