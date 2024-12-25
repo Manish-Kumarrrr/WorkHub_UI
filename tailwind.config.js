@@ -13,6 +13,7 @@ module.exports = {
   			foreground: 'hsl(var(--foreground))',
   			customBg: 'hsl(var(--custom-bg))',
   			itemOnCustomBg: 'hsl(var(--itemOnCustomBg))',
+  			faintCustomBg: 'hsl(var(--faint-custom-bg))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

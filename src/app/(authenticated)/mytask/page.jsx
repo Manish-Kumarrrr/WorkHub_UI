@@ -17,6 +17,7 @@ export default function Feed() {
   
   const fetchTasks = async ({ pageParam = 0}) => {
   
+    console.log("Fetching my tasks")
     const response = await axios.get(
       `http://localhost:8085/v1/task/all/${user?.email}`,
       {
@@ -28,6 +29,7 @@ export default function Feed() {
         },
       }
     );
+    console.log(response)
     return response.data;
   };
   const {
@@ -90,7 +92,6 @@ export default function Feed() {
       ) : (
         <Loading/>
       )}
-      <TaskList tasks={tasks} lastTaskRef={lastTaskRef} />
       {isFetchingNextPage && (
         <div className="text-center mt-4">
           <div className="inline-block animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-gray-900"></div>

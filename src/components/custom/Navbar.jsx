@@ -8,7 +8,7 @@ function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-2 bg-customBg shadow-md">
       {/* Sidebar Trigger on the Left */}
       <div className="flex items-center">
-        <SidebarTrigger className="mr-4 bg-itemOnCustomBg" />
+        <SidebarTrigger className="mr-4 bg-itemOnCustomBg text-black" />
       </div>
 
       {/* Centered "WorkHub" Text */}

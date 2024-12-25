@@ -33,7 +33,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem >
-              <SidebarMenuButton className="hover:bg-foreground ">
+              <SidebarMenuButton className="hover:bg-faintCustomBg ">
                 {/* View Profile */}
                 <UserCircle className="mr-2 h-4 w-4 text-itemOnCustomBg " />
                 <ProfileDialog />
@@ -41,14 +41,14 @@ export function AppSidebar() {
             </SidebarMenuItem>
             <SidebarMenuItem>
             <a href="/mytask" >
-              <SidebarMenuButton className="hover:underline hover:bg-foreground  hover:text-itemOnCustomBg text-itemOnCustomBg ">
+              <SidebarMenuButton className="hover:underline hover:bg-faintCustomBg  hover:text-itemOnCustomBg text-itemOnCustomBg ">
                 <ListTodo className="mr-2 h-4 w-4 text-itemOnCustomBg" />
                 My Tasks 
               </SidebarMenuButton>
             </a>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton className="hover:bg-foreground ">
+              <SidebarMenuButton className="hover:bg-faintCustomBg ">
                 <PlusCircle className="mr-2 h-4 w-4 text-itemOnCustomBg" />
                 {/* Add task */}
                 <AddTask/>

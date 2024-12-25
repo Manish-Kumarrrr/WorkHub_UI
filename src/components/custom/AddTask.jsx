@@ -33,6 +33,7 @@ import {
 import { X } from "lucide-react";
 import { tag } from "@/store/tag";
 import axios from "axios";
+import { userStore } from "@/store/userStore";
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 const formSchema = z.object({
@@ -40,16 +41,16 @@ const formSchema = z.object({
     required_error: "Please select tag.",
   }),
   pay: z.string().min(1, { message: "Pay is required" }),
-  email: z
-    .string()
-    .min(1, {
-      message: "Enter Email",
-    })
-    .email("This is not a valid email."),
-  phoneNo: z
-    .string()
-    .min(10, { message: "Must be a valid mobile number" })
-    .max(14, { message: "Must be a valid mobile number" }),
+  // email: z
+  //   .string()
+  //   .min(1, {
+  //     message: "Enter Email",
+  //   })
+  //   .email("This is not a valid email."),
+  // phoneNo: z
+  //   .string()
+  //   .min(10, { message: "Must be a valid mobile number" })
+  //   .max(14, { message: "Must be a valid mobile number" }),
   description: z
     .string()
     .min(10, "Description must be at least 10 characters long"),
@@ -60,6 +61,7 @@ const formSchema = z.object({
 });
 
 export function AddTask() {
+  const user = userStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -69,8 +71,6 @@ export function AddTask() {
     defaultValues: {
       tag: "",
       pay: "",
-      email: "",
-      phoneNo: "",
       description: "",
       address: "",
       city: "",
@@ -108,13 +108,15 @@ export function AddTask() {
       imageList.push(cloudinaryResponse.data.secure_url);
     }
     values.images = imageList;
+    values.userId = user.email;
+    values.phoneNo = user.phoneNo;
     // Now send all the task data to server or db
 
     await axios
       .post("http://localhost:8085/v1/task/add", values)
       .then(
         (response) => {
-          
+          console.log("Task Added succesfully")
         },
         (error) => {
           toast({
@@ -213,7 +215,7 @@ export function AddTask() {
                 )}
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="email"
@@ -244,7 +246,7 @@ export function AddTask() {
                   </FormItem>
                 )}
               />
-            </div>
+            </div> */}
             <FormField
               name="images"
               render={() => (

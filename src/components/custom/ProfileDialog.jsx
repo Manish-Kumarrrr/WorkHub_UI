@@ -41,8 +41,8 @@ export function ProfileDialog() {
             <p className="text-sm text-muted-foreground flex items-center justify-center mt-1">
               <Calendar className="mr-2 h-4 w-4" />
               {/* Joined {user.date} */}
-              Joined {user?.joinDate && (format(user.joinDate, 'MMMM d, yyyy'))}
-              {/* Joined {format(user.joinDate, 'MMMM d, yyyy')} */}
+              {/* Joined {user?.joinDate && (format(user.joinDate, 'MMMM d, yyyy'))} */}
+              Joined {format(user.joinDate, 'MMMM d, yyyy')}
             </p>
           </div>
           <div className="space-y-2">

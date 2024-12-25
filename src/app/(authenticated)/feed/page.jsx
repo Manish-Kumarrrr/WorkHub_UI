@@ -11,14 +11,15 @@ import { useRouter } from "next/navigation";
 const ITEMS_PER_PAGE = 8;
 
 export default function Feed() {
-    const user = userStore((state) => state.user);
+  const user = userStore((state) => state.user);
 
   const router = useRouter();
   
   const fetchTasks = async ({ pageParam = 0}) => {
   
+    console.log("Fetching tasks")
     const response = await axios.get(
-      `http://localhost:8085/v1/task/all/${user?.email}`,
+      `http://localhost:8085/v1/task/all`,
       {
         params: {
           pageNumber: pageParam,
@@ -89,7 +90,6 @@ export default function Feed() {
       ) : (
         <Loading/>
       )}
-      <TaskList tasks={tasks} lastTaskRef={lastTaskRef} />
       {isFetchingNextPage && (
         <div className="text-center mt-4">
           <div className="inline-block animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-gray-900"></div>

@@ -143,11 +143,12 @@ function ImageCarousel({ images }) {
 }
 
 export function TaskList({ tasks, lastTaskRef }) {
+  console.log(tasks)
   return (
     <div className="space-y-4">
       {tasks.map((task, index) => (
         <Card 
-          key={`${task.taskId}-${index}`} 
+          key={`${index}`} 
           className="overflow-hidden"
           ref={index === tasks.length - 1 ? lastTaskRef : undefined}
         >
@@ -158,17 +159,17 @@ export function TaskList({ tasks, lastTaskRef }) {
               </div>
               <div className="flex-grow">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-semibold">{task.taskId}</h3>
+                  <h3 className="text-lg font-semibold">TaskId: {task.taskId}</h3>
                   <Badge variant={task.status.toLowerCase() === 'active' ? 'default' : 'secondary'}>
                     {task.status}
                   </Badge>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
                   <div><span className="font-semibold">Tag:</span> {task.tag}</div>
-                  <div><span className="font-semibold">Pay:</span> {task.pay || 'N/A'}</div>
+                  <div><span className="font-semibold">Pay:</span> {task.pay || 'N/A'} INR</div>
                   <div><span className="font-semibold">Date:</span> {task.createdDate ? format(parseISO(task.createdDate), 'dd/MM/yyyy') : 'N/A'}</div>
-                  <div><span className="font-semibold">Email:</span> {task.email || 'N/A'}</div>
-                  <div><span className="font-semibold">Phone:</span> {task.phoneNo}</div>
+                  <div><span className="font-semibold">Email:</span> {task.userId || 'N/A'}</div>
+                  <div><span className="font-semibold">Phone:</span> +`{task.phoneNo}</div>
                 </div>
                 <div className="mb-2">
                   <span className="font-semibold">Description:</span>
