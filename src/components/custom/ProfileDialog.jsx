@@ -23,11 +23,11 @@ export function ProfileDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <span className="text-primary hover:underline cursor-pointer w-full h-full">View Profile</span>
+        <span className="text-itemOnCustomBg hover:underline cursor-pointer w-full h-full">View Profile</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>User Profile</DialogTitle>
+          <DialogTitle className="text-itemOnCustomBg">Your Profile</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="flex items-center justify-center">
@@ -41,7 +41,7 @@ export function ProfileDialog() {
             <p className="text-sm text-muted-foreground flex items-center justify-center mt-1">
               <Calendar className="mr-2 h-4 w-4" />
               {/* Joined {user.date} */}
-              {/* Joined {user.joinDate && (format(user.joinDate, 'MMMM d, yyyy'))} */}
+              Joined {user?.joinDate && (format(user.joinDate, 'MMMM d, yyyy'))}
               {/* Joined {format(user.joinDate, 'MMMM d, yyyy')} */}
             </p>
           </div>

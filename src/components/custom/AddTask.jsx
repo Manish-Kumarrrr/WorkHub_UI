@@ -159,7 +159,7 @@ export function AddTask() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {/* <Button variant="outline">Open Task Form</Button> */}
-        <span className="text-primary hover:underline cursor-pointer w-full h-full">
+        <span className="text-itemOnCustomBg hover:underline cursor-pointer w-full h-full">
           Add Task
         </span>
       </DialogTrigger>

@@ -128,7 +128,7 @@ function RegisterForm() {
     <div className="flex flex-col md:flex-row ">
       {/* <left part */}
       <div className="w-full md:w-1/2 flex items-center justify-center">
-        <Card className="mx-auto my-20 max-w-sm">
+        <Card className="mx-auto my-20 w-3/5">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Register</CardTitle>
             <CardDescription>

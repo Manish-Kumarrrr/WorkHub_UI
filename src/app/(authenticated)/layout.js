@@ -14,6 +14,7 @@ export default function RootLayout({ children }) {
   const showNavbar = !["/register", "/login"].includes(pathname);
 
   return (
+    <>
     <SidebarProvider>
       <div className="flex w-screen">
         <AppSidebar />
@@ -24,9 +25,11 @@ export default function RootLayout({ children }) {
             {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           </QueryClientProvider>
           {/* <main className="flex-1 overflow-auto">{children}</main> */}
-          <Footer />
+          
         </SidebarInset>
       </div>
     </SidebarProvider>
+    <Footer />
+    </>
   );
 }

@@ -21,35 +21,35 @@ import { AddTask } from "./AddTask";
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-black">
-      <SidebarHeader className="bg-black">
+    <Sidebar className="border-customBg bg-customeBg text-itemOnCustomBg ">
+      <SidebarHeader className="bg-customBg">
         {/* <SidebarTrigger className="p-4 mr-4 bg-white" onclick={()=>setToggle(true)}/> */}
-          <div className="bg-black h-8 m-0"></div>
+          <div className="bg-customBg h-8 m-0"></div>
       </SidebarHeader>
       <SidebarHeader className="mt-2">
         <Input type="text" placeholder="Search..." />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-customBg ">
         <SidebarGroup>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton>
+            <SidebarMenuItem >
+              <SidebarMenuButton className="hover:bg-foreground ">
                 {/* View Profile */}
-                <UserCircle className="mr-2 h-4 w-4" />
-                <ProfileDialog/>
+                <UserCircle className="mr-2 h-4 w-4 text-itemOnCustomBg " />
+                <ProfileDialog />
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
             <a href="/mytask" >
-              <SidebarMenuButton className="hover:underline ">
-                <ListTodo className="mr-2 h-4 w-4" />
+              <SidebarMenuButton className="hover:underline hover:bg-foreground  hover:text-itemOnCustomBg text-itemOnCustomBg ">
+                <ListTodo className="mr-2 h-4 w-4 text-itemOnCustomBg" />
                 My Tasks 
               </SidebarMenuButton>
             </a>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton>
-                <PlusCircle className="mr-2 h-4 w-4" />
+              <SidebarMenuButton className="hover:bg-foreground ">
+                <PlusCircle className="mr-2 h-4 w-4 text-itemOnCustomBg" />
                 {/* Add task */}
                 <AddTask/>
               </SidebarMenuButton>
@@ -57,15 +57,15 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Filters</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-itemOnCustomBg text-balance ">Filters</SidebarGroupLabel>
           <SidebarGroupContent>
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <Checkbox id="useCurrentLocation" />
+                <Checkbox id="useCurrentLocation" className="bg-itemOnCustomBg"/>
                 <Label htmlFor="useCurrentLocation">Use Current Location</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <Checkbox id="byMe" />
+                <Checkbox id="byMe" className="bg-itemOnCustomBg" />
                 <Label htmlFor="byMe">By Me</Label>
               </div>
               <Button className="w-full">Apply</Button>
@@ -73,13 +73,13 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarHeader>
+      {/* <SidebarHeader>
         <Button
         // onClick={handleLogOut}
         >
           Sign Out
         </Button>
-      </SidebarHeader>
+      </SidebarHeader> */}
     </Sidebar>
   );
 }

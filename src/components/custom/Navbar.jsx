@@ -5,10 +5,10 @@ import { userStore } from "@/store/userStore";
 function Navbar() {
   const user = userStore((state) => state.user);
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-2 bg-black shadow-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-2 bg-customBg shadow-md">
       {/* Sidebar Trigger on the Left */}
       <div className="flex items-center">
-        <SidebarTrigger className="mr-4 bg-white" />
+        <SidebarTrigger className="mr-4 bg-itemOnCustomBg" />
       </div>
 
       {/* Centered "WorkHub" Text */}

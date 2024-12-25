@@ -84,7 +84,7 @@ function LoginForm() {
       <Footer/>
 
       {/* Right Section */}
-      <div className=" w-full md:w-1/2 flex items-center justify-center">
+      <div className=" w-full md:w-3/4 flex items-center justify-center">
         <Card className="mx-auto my-20 max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl text-center">Login</CardTitle>
