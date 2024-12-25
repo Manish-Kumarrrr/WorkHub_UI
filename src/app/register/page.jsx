@@ -102,7 +102,7 @@ function RegisterForm() {
     console.log(data);
 
     const response = await axios
-      .post("http://localhost:8085/v1/auth/register", data)
+      .post("http://localhost:8085/v1/auth/register", data,{ withCredentials: true })
       .then(
         (response) => {
           setUser(response.data);

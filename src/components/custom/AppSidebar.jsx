@@ -41,7 +41,7 @@ export function AppSidebar() {
             </SidebarMenuItem>
             <SidebarMenuItem>
             <a href="/mytask" >
-              <SidebarMenuButton>
+              <SidebarMenuButton className="hover:underline ">
                 <ListTodo className="mr-2 h-4 w-4" />
                 My Tasks 
               </SidebarMenuButton>

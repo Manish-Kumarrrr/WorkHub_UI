@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useToast } from "@/components/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -41,7 +41,7 @@ const FormSchema = z.object({
 });
 
 function LoginForm() {
-  const router = useRouter;
+  const router = useRouter();
   const user = userStore((state) => state.user);
   const setUser = userStore((state) => state.setUser);
   const { toast } = useToast();
@@ -58,10 +58,13 @@ function LoginForm() {
     console.log(data);
     const response = await axios.post(
       "http://localhost:8085/v1/auth/login",
-      data
-    ).then((response) => {
-      console.log("success +++",response);
+      data,
+      { withCredentials: true }// Enable sending and saving cookies
+    )
+    .then((response) => {
+      console.log(response,"@@@@@@@@@login");
       setUser(response.data);
+      router.replace("/feed");
     }, (error) => {
       console.log(error);
       toast({
