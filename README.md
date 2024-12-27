@@ -11,7 +11,7 @@ Follow the steps below to set up and run WorkHub locally:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Manish-Kumarrrr/WorkHub_UI.git
 cd workhub
 ```
 
@@ -31,21 +31,15 @@ Run the following commands to start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 ### Step 4: Set Up Other Services
 
 Ensure the following services are set up and running:
 
-- **workhub_api_gateway**
-- **workhub_user_service**
-- **workhub_task_service**
+- [workhub_api_gateway](https://github.com/Manish-Kumarrrr/WorkHub_ApiGateway.git)
+- [WorkHub_User_Service](https://github.com/Manish-Kumarrrr/WorkHub_User_Service.git)
+- [WorkHub_Task_Service](https://github.com/Manish-Kumarrrr/WorkHub_Task_Service.git)
 
 ### Step 5: Access the Application
 
