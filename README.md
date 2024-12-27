@@ -37,7 +37,7 @@ npm run dev
 
 Ensure the following services are set up and running:
 
-- [workhub_api_gateway](https://github.com/Manish-Kumarrrr/WorkHub_ApiGateway.git)
+- [workhub_ApiGateway](https://github.com/Manish-Kumarrrr/WorkHub_ApiGateway.git)
 - [WorkHub_User_Service](https://github.com/Manish-Kumarrrr/WorkHub_User_Service.git)
 - [WorkHub_Task_Service](https://github.com/Manish-Kumarrrr/WorkHub_Task_Service.git)
 
