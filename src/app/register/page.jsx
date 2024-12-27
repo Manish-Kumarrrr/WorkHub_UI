@@ -32,8 +32,6 @@ import Footer from "@/components/custom/Footer";
 import { ProfilePictureUploadDialog } from "@/components/custom/ProfilePictureUploadDialog";
 import { tag } from "@/store/tag";
 import { useRouter } from "next/navigation";
-const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-const API_KEY = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 
 const FormSchema = z.object({
   name: z.string().min(1, {
@@ -116,14 +114,18 @@ function RegisterForm() {
           toast({
             // title: "You submitted the following values:",
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{error.response.data.detail}!!</code>
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4 overflow-auto">
+                <code className="text-white break-words whitespace-pre-wrap">
+                  {error.response.data.detail}!!
+                </code>
               </pre>
             ),
           });
+          
         }
       );
-    console.log(response, "@@@@@@@@@@@@@ register response");
+    console.log(response, "----register response");
+    
   }
 
   return (

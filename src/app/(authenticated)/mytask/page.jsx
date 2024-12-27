@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { TaskList } from "@/components/custom/TaskList";
@@ -11,13 +11,13 @@ import { useRouter } from "next/navigation";
 const ITEMS_PER_PAGE = 8;
 
 export default function Feed() {
+  const [isThereAnyTask, setIsThereAnyTask]=useState(true);
   const user = userStore((state) => state.user);
 
   const router = useRouter();
   
   const fetchTasks = async ({ pageParam = 0}) => {
   
-    console.log("Fetching my tasks")
     const response = await axios.get(
       `http://localhost:8085/v1/task/all/${user?.email}`,
       {
@@ -29,7 +29,9 @@ export default function Feed() {
         },
       }
     );
-    console.log(response)
+    if(response?.data.totalElements===0)
+      setIsThereAnyTask(false)
+    console.log(isThereAnyTask)
     return response.data;
   };
   const {
@@ -83,14 +85,13 @@ export default function Feed() {
   }
 
   const tasks = data?.pages.flatMap((page) => page.content) || [];
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Task List</h1>
       {tasks.length > 0 ? (
         <TaskList tasks={tasks} lastTaskRef={lastTaskRef} />
       ) : (
-        <Loading/>
+        <Loading isThereAnyTask/>
       )}
       {isFetchingNextPage && (
         <div className="text-center mt-4">

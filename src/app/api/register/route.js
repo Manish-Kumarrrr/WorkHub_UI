@@ -1,8 +1,6 @@
 import arcjet, { validateEmail } from "@arcjet/next";
 import { NextResponse } from "next/server";
 
-
-
 export async function POST(req) {
     const aj = arcjet({
         key: process.env.ARCJET_KEY, // Get your site key from https://app.arcjet.com
@@ -24,9 +22,5 @@ export async function POST(req) {
     console.warn("Fake Email")
     return NextResponse.json({ detail: "Use Genuine Mail" }, { status: 403 });
   }
-  
-
   return NextResponse.redirect('http://localhost:8085/v1/auth/register');
 }
-
-// http://localhost:8085/v1/auth/register
