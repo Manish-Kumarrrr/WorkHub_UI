@@ -42,7 +42,7 @@ export const tag = [
   { value: "socialworker", label: "Social Worker" },
   { value: "software", label: "Software Development" },
   { value: "tailor", label: "Tailor" },
-  { value: "teacher", label: "Teaching" },
+  { value: "teacher", label: "Teacher" },
   { value: "technician", label: "Technician" },
   { value: "trainer", label: "Fitness Trainer" },
   { value: "translator", label: "Translator" },

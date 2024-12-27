@@ -90,6 +90,7 @@ function RegisterForm() {
     formData.append("signature", signature);
 
     // Step 3: Upload the image to Cloudinary
+    if(data.profileUrl!=""){
     const cloudinaryResponse = await axios.post(
       `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
       formData,
@@ -99,10 +100,10 @@ function RegisterForm() {
     );
     // Step 4: Return the secure URL of the uploaded image
     data.profileUrl = cloudinaryResponse.data.secure_url;
-    console.log(data);
+    console.log(data);}
 
     const response = await axios
-      .post("http://localhost:8085/v1/auth/register", data,{ withCredentials: true })
+      .post("http://localhost:3000/api/register", data,{ withCredentials: true })
       .then(
         (response) => {
           setUser(response.data);
@@ -111,11 +112,12 @@ function RegisterForm() {
           router.replace("/feed");
         },
         (error) => {
+          console.log(error)
           toast({
             // title: "You submitted the following values:",
             description: (
               <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">Email is already in use!!</code>
+                <code className="text-white">{error.response.data.detail}!!</code>
               </pre>
             ),
           });
