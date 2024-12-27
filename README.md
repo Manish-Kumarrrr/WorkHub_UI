@@ -3,7 +3,19 @@
 WorkHub is a scalable and secure platform that connects task experts with gigs seamlessly. Whether you're looking to publish a task or find your next opportunity, WorkHub simplifies the process with intuitive features, including location-based job searches. Empowering experts to find work efficiently, WorkHub ensures tasks reach the right hands quickly and effectively.
 
 ---
+# Features of WorkHub UI
 
+- **Secure Register and Login**: Implements cookies with JWT-based authentication and authorization for secure user sessions.  
+- **Forgot Password via Email Verification**: Allows users to reset their password securely through email verification.  
+- **OAuth Integration**: Enables users to sign in with Google for a convenient and seamless login experience.  
+- **Temporary Email Detection**: Identifies and blocks temporary email addresses to reduce fake users and maintain authenticity.  
+- **Personalized Feed**: Delivers a customized feed based on user interests for enhanced engagement.  
+- **Image Upload via Signed URL**: Reduces backend load by allowing secure and efficient direct uploads to cloud storage.  
+- **Minimalistic UI**: Provides a sleek, user-friendly design for an amazing user experience.  
+- **Task Cleanup**: Automated cron job deletes inactive tasks older than one month to maintain system performance.  
+- **Message Queue Integration**: Ensures fault tolerance by using a message queue for critical operations.  
+- **Microservices Architecture**: Enables modular services for effortless scalability and independent deployment.  
+---
 ## Getting Started
 
 Follow the steps below to set up and run WorkHub locally:
@@ -63,10 +75,8 @@ WorkHub uses the following technologies:
 
 ## Acknowledgments
 
-Thanks to the tools and technologies that made this project possible:
-- [Cloudinary](https://cloudinary.com/)
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-- [Vercel](https://vercel.com/)
+- A big thanks to **Medium** and **Stack Overflow** for their invaluable community support and resources, which greatly helped in the development of this project.
+
 
 ---
 
