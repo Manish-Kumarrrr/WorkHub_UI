@@ -35,6 +35,7 @@ Create a `.env.local` file and add the following variables:
 CLOUDINARY_CLOUD_NAME=<your_cloudinary_cloud_name>
 CLOUDINARY_API_KEY=<your_cloudinary_api_key>
 CLOUDINARY_API_SECRET=<your_cloudinary_api_secret>
+ARCJET_KEY=<your_arcjet_key>
 ```
 
 ### Step 3: Start the Application
