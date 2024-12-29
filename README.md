@@ -7,11 +7,11 @@ WorkHub is a scalable and secure platform that connects task experts with gigs s
 
 - **Secure Register and Login**: Implements cookies with JWT-based authentication and authorization for secure user sessions.  
 - **Forgot Password via Email Verification**: Allows users to reset their password securely through email verification.  
-- **OAuth Integration**: Enables users to sign in with Google for a convenient and seamless login experience.  
+- **OAuth Integration**: Enables users to sign in with Google for a convenient and seamless login and register experience.  
 - **Temporary Email Detection**: Identifies and blocks temporary email addresses to reduce fake users and maintain authenticity.  
 - **Personalized Feed**: Delivers a customized feed based on user interests for enhanced engagement.  
 - **Image Upload via Signed URL**: Reduces backend load by allowing secure and efficient direct uploads to cloud storage.  
-- **Minimalistic UI**: Provides a sleek, user-friendly design for an amazing user experience.  
+- **Minimalistic and Responsive UI**: Provides a sleek, user-friendly design that ensures an amazing user experience across all screen sizes, from mobile devices to desktops.
 - **Task Cleanup**: Automated cron job deletes inactive tasks older than one month to maintain system performance.  
 - **Message Queue Integration**: Ensures fault tolerance by using a message queue for critical operations.  
 - **Microservices Architecture**: Enables modular services for effortless scalability and independent deployment.  
@@ -49,7 +49,7 @@ npm run dev
 
 Ensure the following services are set up and running:
 
-- [workhub_ApiGateway](https://github.com/Manish-Kumarrrr/WorkHub_ApiGateway.git)
+- [Workhub_ApiGateway](https://github.com/Manish-Kumarrrr/WorkHub_ApiGateway.git)
 - [WorkHub_User_Service](https://github.com/Manish-Kumarrrr/WorkHub_User_Service.git)
 - [WorkHub_Task_Service](https://github.com/Manish-Kumarrrr/WorkHub_Task_Service.git)
 
