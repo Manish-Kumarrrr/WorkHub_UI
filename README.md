@@ -3,12 +3,12 @@
 WorkHub is a scalable and secure platform that connects task experts with gigs seamlessly. Whether you're looking to publish a task or find your next opportunity, WorkHub simplifies the process with intuitive features, including location-based job searches. Empowering experts to find work efficiently, WorkHub ensures tasks reach the right hands quickly and effectively.
 
 ---
-# Features of WorkHub UI
+# Features of WorkHub:
 
 - **Secure Register and Login**: Implements cookies with JWT-based authentication and authorization for secure user sessions.  
 - **Forgot Password via Email Verification**: Allows users to reset their password securely through email verification.  
 - **OAuth Integration**: Enables users to sign in with Google for a convenient and seamless login and register experience.  
-- **Temporary Email Detection**: Identifies and blocks temporary email addresses to reduce fake users and maintain authenticity.  
+- **Temporary Email Detection**: Identifies and blocks disposable email addresses to reduce fake users and maintain authenticity.  
 - **Personalized Feed**: Delivers a customized feed based on user interests for enhanced engagement.  
 - **Image Upload via Signed URL**: Reduces backend load by allowing secure and efficient direct uploads to cloud storage.  
 - **Minimalistic and Responsive UI**: Provides a sleek, user-friendly design that ensures an amazing user experience across all screen sizes, from mobile devices to desktops.
